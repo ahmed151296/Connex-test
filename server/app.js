@@ -28,7 +28,7 @@ promClient.collectDefaultMetrics({ register: prometheusRegistry });
 // Middleware to check the Authorization header
 const authMiddleware = (req, res, next) => {
   const authHeader = req.header('Authorization');
-  if (authHeader === 'mysecrettoken') {
+  if (authHeader === 'cd') {
     next(); // Continue to the next middleware or route handler
   } else {
     res.status(403).json({ error: 'Forbidden' });
