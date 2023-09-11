@@ -6,9 +6,9 @@ function App() {
   const [timeDifference, setTimeDifference] = useState(0);
   const [isLoading, setIsLoading] = useState(true); // State to track loading status
 
-  const apiUrlTime = '/getServerTime';
+  const apiUrlTime = '/time';
   const apiUrlMetrics = '/metrics';
-  const authToken = `cd`; // Replace with your actual authorization token
+  const authToken = `cd`;
 
   useEffect(() => {
     // Function to fetch data from /time and /metrics
@@ -30,7 +30,7 @@ function App() {
             Authorization: authToken,
           },
         });
-        const metrics = await responseMetrics.text(); // Assuming metrics data is in text format
+        const metrics = await responseMetrics.text();
 
         // Calculate time difference
         const serverTimeInSeconds = timeData.epoch;
@@ -67,17 +67,17 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <div>
+    <div className="App">
+      <div className="Time">
         <p>Server Time (Epoch Seconds): {time.epoch}</p>
         <p>Time Difference: {timeDifference}</p>
       </div>
-      <div>
+      <div className="Metrics">
         {isLoading ? (
-          // Display loading indicator when data is being fetched
+          // Displays loading indicator when data is being fetched
           <div>Loading...</div>
         ) : (
-          // Display metrics data when it's available
+          // Displays metrics data when it's available
           <pre>{metricsData}</pre>
         )}
       </div>

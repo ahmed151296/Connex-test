@@ -4,7 +4,7 @@ const promClient = require('prom-client');
 const ajv = new Ajv();
 const app = express();
 
-// Define a schema for the response
+// Defines a schema for the response
 const responseSchema = {
   type: 'object',
   properties: {
@@ -16,20 +16,20 @@ const responseSchema = {
   required: ['epoch'],
 };
 
-// Create a validator function
+// Creates a validator function
 const validateResponse = ajv.compile(responseSchema);
 
-// Create a Prometheus metrics registry
+// Creates a Prometheus metrics registry
 const prometheusRegistry = new promClient.Registry();
 
-// Enable default recommended metrics
+// Enables default recommended metrics
 promClient.collectDefaultMetrics({ register: prometheusRegistry });
 
 // Middleware to check the Authorization header
 const authMiddleware = (req, res, next) => {
   const authHeader = req.header('Authorization');
   if (authHeader === 'cd') {
-    next(); // Continue to the next middleware or route handler
+    next(); // Continues to the next middleware or route handler
   } else {
     res.status(403).json({ error: 'Forbidden' });
   }
@@ -44,8 +44,8 @@ app.use((req, res, next) => {
   }
 });
 
-// Define a route that gets the server time in epoch seconds
-app.get('/getServerTime', (req, res) => {
+// Defines a route that gets the server time in epoch seconds
+app.get('/time', (req, res) => {
   const currentTimeInSeconds = Math.floor(Date.now() / 1000);
   const response = { epoch: currentTimeInSeconds };
 
@@ -56,7 +56,7 @@ app.get('/getServerTime', (req, res) => {
   }
 });
 
-// Define a /metrics endpoint for Prometheus metrics
+// Defines a /metrics endpoint for Prometheus metrics
 app.get('/metrics', async (req, res) => {
   try {
     res.set('Content-Type', promClient.register.contentType);
